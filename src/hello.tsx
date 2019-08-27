@@ -1,34 +1,33 @@
 //import * as React from 'react'
 import React, {useState, useCallback} from 'react'
 
-const functions1: any = new Set();
-const functions2: any = new Set();
-
 export default function Hello() {
-  const [now, setNow] = useState(Date.now())
-  const [feed, setFeed] = useState('abc')
+  const [now, setNow] = useState(1)
+  const [feed, setFeed] = useState(1)
 
-  const callback1 = () => {
-    console.log('callback1');
+  const hello1 = () => {
+    console.log('hello1: ', now);
   }
 
-  const callback2 = useCallback(() => {
-    console.log('callback2')
+  const hello2 = useCallback(() => {
+    console.log('hello2: ', now)
   }, [feed]);
 
-  functions1.add(callback1);
-  functions2.add(callback2);
+  function sayHello() {
+    hello1();
+    hello2();
+    setNow(now + 1);
+  }
 
   return <div>
     <h1>Hello "useCallback"</h1>
     <div>
-      <label>
-        Set Feed:
-        <input type='text' value={feed} onChange={event => setFeed(event.target.value)}/>
-      </label>
-      <div>Functions1 count: {functions1.size}</div>
-      <div>Functions2 count: {functions2.size}</div>
-      <button onClick={() => setNow(Date.now())}>Re-Render ({now})</button>
+      <div>
+        <button onClick={() => setFeed(feed + 1)}>Update Feed ({feed})</button>
+      </div>
+      <div>
+        <button onClick={sayHello}>Say Hello</button>
+      </div>
     </div>
   </div>
 };
