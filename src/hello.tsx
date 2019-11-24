@@ -1,32 +1,27 @@
-//import * as React from 'react'
 import React, {useState, useCallback} from 'react'
+import Child from './child';
 
 export default function Hello() {
-  const [now, setNow] = useState(1)
   const [feed, setFeed] = useState(1)
 
-  const hello1 = () => {
-    console.log('hello1: ', now);
+  function onClick1() {
+    console.log("### onClick1");
   }
 
-  const hello2 = useCallback(() => {
-    console.log('hello2: ', now)
-  }, [feed]);
-
-  function sayHello() {
-    hello1();
-    hello2();
-    setNow(now + 1);
-  }
+  const onClick2 = useCallback(() => {
+    console.log("### onClick2");
+  }, []);
 
   return <div>
     <h1>Hello "useCallback"</h1>
     <div>
       <div>
-        <button onClick={() => setFeed(feed + 1)}>Update Feed ({feed})</button>
+        <button onClick={() => setFeed(feed + 1)}>Change State to Trigger Re-Rendering</button>
       </div>
+      <hr/>
       <div>
-        <button onClick={sayHello}>Say Hello</button>
+        <Child text='Child1 with normal callback' onClick={onClick1}/>
+        <Child text='Child2 (useCallback)' onClick={onClick2}/>
       </div>
     </div>
   </div>
